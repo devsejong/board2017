@@ -19,19 +19,28 @@
             <thead>
             <tr>
                 <th class="col-xs-1 text-center">번호</th>
-                <th class="col-xs-9 text-center">제목</th>
-                <th class="col-xs-1 text-center">날짜</th>
+                <th class="col-xs-8 text-center">제목</th>
+                <th class="col-xs-2 text-center">날짜</th>
                 <th class="col-xs-1 text-center">지은이</th>
             </tr>
             </thead>
 
             <tbody>
+
+            <#list articlePage.content as article>
             <tr>
-                <td class="text-center">1</td>
-                <td>제목입니다.</td>
-                <td>2017.03.21</td>
-                <td>Sejong Park</td>
+                <td>${article.id}</td>
+                <td>${article.title}</td>
+                <td>${article.created.format('yy/MM/dd HH:mm')}</td>
+                <td>${article.author}</td>
             </tr>
+            <#else>
+            <tr>
+                <td class="text-center" colspan="4">
+                    조회된 항목이 없습니다.
+                </td>
+            </tr>
+            </#list>
             </tbody>
         </table>
     </div><!--//.board-wrapper-->
