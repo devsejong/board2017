@@ -5,17 +5,31 @@ import net.chandol.study.board.article.dto.ArticleModifyRequest;
 import net.chandol.study.board.article.model.Article;
 import net.chandol.study.board.article.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static org.springframework.data.domain.Sort.Direction.*;
 
 @Service
 public class ArticleService {
     @Autowired ArticleRepository repository;
+    private final int DEFAULT_PAGE_SIZE = 10;
 
     @Transactional
-    public Article createArticle(ArticleCreateRequest request){
+    public Article createArticle(ArticleCreateRequest request) {
         Article article = new Article(request.getTitle(), request.getAuthor(), request.getContent());
         return repository.save(article);
+    }
+
+    @Transactional
+    public Page<Article> getArticlePage(int page) {
+        PageRequest pageRequest = new PageRequest(
+                page, DEFAULT_PAGE_SIZE, new Sort(DESC, "id"));
+
+        return repository.findAll(pageRequest);
     }
 
     @Transactional
@@ -34,4 +48,5 @@ public class ArticleService {
     public void removeArticle(Long id) {
         repository.delete(id);
     }
+
 }

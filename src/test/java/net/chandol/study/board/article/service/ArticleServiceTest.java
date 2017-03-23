@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +38,7 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void readArticleTest(){
+    public void readArticleTest() {
         // given
         ArticleCreateRequest request = new ArticleCreateRequest("제목", "작가", "본문");
         Article article = articleService.createArticle(request);
@@ -54,7 +55,7 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void modifyArticleTest(){
+    public void modifyArticleTest() {
         // given
         ArticleCreateRequest request = new ArticleCreateRequest("제목", "작가", "본문");
         Article article = articleService.createArticle(request);
@@ -71,7 +72,7 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void removeArticleTest(){
+    public void removeArticleTest() {
         // given
         ArticleCreateRequest request = new ArticleCreateRequest("제목", "작가", "본문");
         Article article = articleService.createArticle(request);
@@ -82,6 +83,23 @@ public class ArticleServiceTest {
 
         //then
         assertThat(articleRepository.count()).isEqualTo(0L);
+    }
+
+    @Test
+    public void readArticlePageTest() {
+        // given
+        for (int idx = 0; idx < 30; idx++) {
+            articleService.createArticle(new ArticleCreateRequest("제목" + idx, "작가", "본문"));
+        }
+
+        // when
+        Page<Article> articlePage = articleService.getArticlePage(0);
+
+        // then
+        assertThat(articlePage.getTotalElements()).isEqualTo(30);
+        assertThat(articlePage.getSize()).isEqualTo(10);
+        Article firstArticle = articlePage.getContent().get(0);
+        assertThat(firstArticle.getTitle()).isEqualTo("제목29");
     }
 
 }
