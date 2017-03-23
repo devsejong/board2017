@@ -29,4 +29,10 @@ public class Article {
         this.content = content;
         this.created = OffsetDateTime.now();
     }
+
+    public void modifyArticle(String title, String author, String content){
+        this.title = title;
+        this.author = author;
+        this.content = content;
+    }
 }

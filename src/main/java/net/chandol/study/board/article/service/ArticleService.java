@@ -1,6 +1,7 @@
 package net.chandol.study.board.article.service;
 
 import net.chandol.study.board.article.dto.ArticleCreateRequest;
+import net.chandol.study.board.article.dto.ArticleModifyRequest;
 import net.chandol.study.board.article.model.Article;
 import net.chandol.study.board.article.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,17 @@ public class ArticleService {
     @Transactional
     public Article getArticle(Long id) {
         return repository.getOne(id);
+    }
+
+    @Transactional
+    public Article modifyArticle(Long id, ArticleModifyRequest request) {
+        Article article = getArticle(id);
+        article.modifyArticle(request.getTitle(), request.getAuthor(), request.getContent());
+        return article;
+    }
+
+    @Transactional
+    public void removeArticle(Long id) {
+        repository.delete(id);
     }
 }
