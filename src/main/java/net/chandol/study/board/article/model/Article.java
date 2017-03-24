@@ -2,22 +2,19 @@ package net.chandol.study.board.article.model;
 
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
 @Getter
 public class Article {
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     private Long id;
     private String title;
     private String author;
     @Column(columnDefinition = "TEXT")
     private String content;
+    @Temporal(TemporalType.TIMESTAMP)
     private OffsetDateTime created;
 
     protected Article() {
