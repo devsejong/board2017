@@ -19,6 +19,7 @@
         <h1>글쓰기</h1>
 
         <form action="/articles/write" id="editForm" method="post">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="form-group">
                 <label for="title">제목</label>
                 <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력하세요">
