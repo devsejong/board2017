@@ -23,4 +23,10 @@ public class ArticleController {
 
         return "/article/articles";
     }
+
+    @GetMapping("/articles/write")
+    public String writeArticles(Model model) {
+        return "/article/writeArticle";
+    }
+
 }
