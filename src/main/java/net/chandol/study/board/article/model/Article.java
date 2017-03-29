@@ -8,13 +8,13 @@ import java.time.OffsetDateTime;
 @Entity
 @Getter
 public class Article {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private String title;
     private String author;
     @Column(columnDefinition = "TEXT")
     private String content;
-    @Temporal(TemporalType.TIMESTAMP)
     private OffsetDateTime created;
 
     protected Article() {
@@ -27,7 +27,7 @@ public class Article {
         this.created = OffsetDateTime.now();
     }
 
-    public void modifyArticle(String title, String author, String content){
+    public void modifyArticle(String title, String author, String content) {
         this.title = title;
         this.author = author;
         this.content = content;

@@ -1,5 +1,6 @@
 package net.chandol.study.board.article.controller;
 
+import net.chandol.study.board.article.dto.ArticleCreateRequest;
 import net.chandol.study.board.article.model.Article;
 import net.chandol.study.board.article.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -23,4 +26,19 @@ public class ArticleController {
 
         return "/article/articles";
     }
+
+    @GetMapping("/articles/write")
+    public String writeArticle(Model model) {
+        return "/article/writeArticle";
+    }
+
+    @PostMapping("/articles/write")
+    public String writeArticle(
+            @ModelAttribute ArticleCreateRequest request) {
+
+        articleService.createArticle(request);
+
+        return "redirect:/articles";
+    }
+
 }
