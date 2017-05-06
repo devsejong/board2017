@@ -5,6 +5,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 public class UserService implements UserDetailsService {
     @Autowired UserRepository userRepository;
@@ -19,9 +21,10 @@ public class UserService implements UserDetailsService {
     }
 
     public User createUser(UserCreateRequest request) {
-        User user = new User(request.getUsername(), request.getEmail(), request.getPassword());
-        userRepository.save(user);
+        User user = new User(request.getUsername(), request.getEmail(),
+                request.getPassword(), Arrays.asList("ROLE_ADMIN"));
 
+        userRepository.save(user);
         return user;
     }
 }

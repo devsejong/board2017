@@ -15,11 +15,11 @@
                 <tbody>
 
                 {{#each articlePage.content}}
-                    <tr>
+                    <tr class="article-row" data-article-id="{{id}}">
                         <td>{{id}}</td>
                         <td>{{title}}</td>
-                        <td>{{temporalFormat created "yyyy.MM.dd"}}</td>
-                        <td>{{author}}</td>
+                        <td class="text-right">{{temporalFormat created "yyyy.MM.dd"}}</td>
+                        <td class="text-right">{{author}}</td>
                     </tr>
                 {{else}}
                     <tr>
@@ -62,8 +62,9 @@
 
     {{#*inline "script-block"}}
         <script>
-            $(".board > tbody > tr").on("click", function () {
-                console.log("board clicked");
+            $(".article-row").on("click", function () {
+                var articleId = $(this).attr("data-article-id");
+                location.href = "/articles/" + articleId;
             });
         </script>
     {{/inline}}

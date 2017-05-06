@@ -1,5 +1,5 @@
 
-package net.chandol.study.board.local;
+package net.chandol.study.board.debug.local;
 
 import net.chandol.study.board.article.dto.ArticleCreateRequest;
 import net.chandol.study.board.article.service.ArticleService;

@@ -3,11 +3,11 @@ package net.chandol.study.board.user;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.util.Arrays;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class User implements UserDetails {
@@ -18,14 +18,17 @@ public class User implements UserDetails {
     private String username;
     private String email;
     private String password;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> authorities = new ArrayList<>();
 
     protected User() {
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, List<String> authorities) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.authorities = authorities;
     }
 
     @Override
@@ -46,13 +49,15 @@ public class User implements UserDetails {
         return email;
     }
 
-    ////////////////////////////////////
-    /* spring security base properties*/
-
     @Override
     public Collection<SimpleGrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ADMIN"));
+        return this.authorities.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
+
+    ////////////////////////////////////
+    /* spring security base properties*/
 
     @Override
     public boolean isAccountNonExpired() {

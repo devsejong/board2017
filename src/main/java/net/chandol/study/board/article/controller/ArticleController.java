@@ -5,6 +5,8 @@ import net.chandol.study.board.article.model.Article;
 import net.chandol.study.board.article.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,25 +25,29 @@ public class ArticleController {
         return "pages/article/articles";
     }
 
-    @GetMapping("/article/{articleId}")
+    @GetMapping("/articles/{articleId}")
     public String getArticle(Model model,
             @PathVariable(value="articleId") Article article) {
 
-        model.addAttribute("articlePage", article);
+        model.addAttribute("article", article);
         return "pages/article/article";
     }
 
+
     @GetMapping("/articles/write")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String writeArticle(Model model) {
-        return "pages/article/writeArticle";
+        return "pages/article/article-write";
     }
 
     @PostMapping("/articles/write")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String writeArticle(
+            Authentication auth,
             @ModelAttribute ArticleCreateRequest request) {
 
-        articleService.createArticle(request);
-        return "redirect:/articles";
+        Article article = articleService.createArticle(request);
+        return "redirect:/articles/" + article.getId();
     }
 
 }
