@@ -14,7 +14,7 @@ import java.time.OffsetDateTime;
 import static java.time.format.DateTimeFormatter.ofPattern;
 
 @Configuration
-public class Java8DateHelper {
+public class HandlebarsConfiguration {
 
     @Autowired HandlebarsViewResolver handlebarsViewResolver;
 
