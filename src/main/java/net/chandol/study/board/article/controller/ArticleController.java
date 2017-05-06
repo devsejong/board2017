@@ -7,29 +7,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ArticleController {
     @Autowired ArticleService articleService;
 
     @GetMapping("/articles")
-    public String getArticles(
-            Model model,
+    public String getArticles(Model model,
             @RequestParam(defaultValue = "1") Integer page) {
 
         Page<Article> articlePage = articleService.getArticlePage(page - 1);
         model.addAttribute("articlePage", articlePage);
 
-        return "/article/articles";
+        return "pages/article/articles";
+    }
+
+    @GetMapping("/article/{articleId}")
+    public String getArticle(Model model,
+            @PathVariable(value="articleId") Article article) {
+
+        model.addAttribute("articlePage", article);
+        return "pages/article/article";
     }
 
     @GetMapping("/articles/write")
     public String writeArticle(Model model) {
-        return "/article/writeArticle";
+        return "pages/article/writeArticle";
     }
 
     @PostMapping("/articles/write")
@@ -37,7 +41,6 @@ public class ArticleController {
             @ModelAttribute ArticleCreateRequest request) {
 
         articleService.createArticle(request);
-
         return "redirect:/articles";
     }
 

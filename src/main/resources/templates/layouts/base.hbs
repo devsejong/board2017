@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {{~#if title}}{{title}}{{else}}기본제목입니다.{{/if~}}
+    </title>
+    {{> includes/default-head }}
+    {{#> head-block}}
+    {{/head-block}}
+</head>
+<body>
+
+{{#> header-block}}
+    {{> includes/header}}
+{{/header-block}}
+
+<div class="container">
+    {{#> body-block}}
+        <h1>There is no Content!</h1>
+    {{/body-block}}
+</div>
+
+<footer class="footer">
+    {{#> footer-block}}
+        {{> includes/footer }}
+    {{/footer-block}}
+</footer>
+
+{{> includes/default-script }}
+{{#> script-block}}{{/script-block}}
+</body>

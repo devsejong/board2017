@@ -1,0 +1,71 @@
+{{#> layouts/base title="게시물읽기"}}
+
+    {{#*inline "body-block"}}
+        <div class="board-wrapper row">
+            <table class="table table-hover board">
+                <thead>
+                <tr>
+                    <th class="col-xs-1 text-center">번호</th>
+                    <th class="col-xs-8 text-center">제목</th>
+                    <th class="col-xs-2 text-center">날짜</th>
+                    <th class="col-xs-1 text-center">지은이</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {{#each articlePage.content}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{title}}</td>
+                        <td>{{temporalFormat created "yyyy.MM.dd"}}</td>
+                        <td>{{author}}</td>
+                    </tr>
+                {{else}}
+                    <tr>
+                        <td class="text-center" colspan="4">
+                            조회된 항목이 없습니다.
+                        </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div><!--//.board-wrapper-->
+
+        <div class="row text-right">
+            <button class="btn btn-default">글쓰기</button>
+        </div>
+
+        <div class="pagination-wrapper row text-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div><!-- //.pagination-wrapper-->
+
+    {{/inline}}
+
+    {{#*inline "script-block"}}
+        <script>
+            $(".board > tbody > tr").on("click", function () {
+                console.log("board clicked");
+            });
+        </script>
+    {{/inline}}
+
+{{/layouts/base}}
