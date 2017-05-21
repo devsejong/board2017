@@ -6,13 +6,13 @@ import lombok.experimental.Tolerate;
 @Data
 public class ArticleCreateRequest {
     private String title;
-    private String author;
     private String content;
+    private Long userId;
 
     @Tolerate
-    public ArticleCreateRequest(String title, String author, String content) {
+    public ArticleCreateRequest(String title, String content, Long userId) {
+        this.userId = userId;
         this.title = title;
-        this.author = author;
         this.content = content;
     }
 }

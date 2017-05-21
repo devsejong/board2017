@@ -1,4 +1,4 @@
-package net.chandol.study.board.debug.local;
+package net.chandol.study.board.util;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;

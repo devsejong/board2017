@@ -6,7 +6,6 @@ import net.chandol.study.board.article.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +32,6 @@ public class ArticleController {
         return "pages/article/article";
     }
 
-
     @GetMapping("/articles/write")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String writeArticle(Model model) {
@@ -41,9 +39,8 @@ public class ArticleController {
     }
 
     @PostMapping("/articles/write")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("#request.userId == principal.id")
     public String writeArticle(
-            Authentication auth,
             @ModelAttribute ArticleCreateRequest request) {
 
         Article article = articleService.createArticle(request);

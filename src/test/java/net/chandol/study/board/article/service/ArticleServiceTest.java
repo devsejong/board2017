@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import static net.chandol.study.board.TestData.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -24,7 +25,7 @@ public class ArticleServiceTest {
     @Test
     public void createArticleTest() {
         // given
-        ArticleCreateRequest request = new ArticleCreateRequest("제목", "작가", "본문");
+        ArticleCreateRequest request = new ArticleCreateRequest("제목", "본문", user("user1").getId());
 
         // when
         Article article = articleService.createArticle(request);
@@ -32,15 +33,13 @@ public class ArticleServiceTest {
         // then
         assertThat(article.getId()).hasNoNullFieldsOrProperties();
         assertThat(article.getTitle()).isEqualTo(request.getTitle());
-        assertThat(article.getAuthor()).isEqualTo(request.getAuthor());
         assertThat(article.getContent()).isEqualTo(request.getContent());
-        assertThat(article.getCreated()).hasNoNullFieldsOrProperties();
     }
 
     @Test
     public void readArticleTest() {
         // given
-        ArticleCreateRequest request = new ArticleCreateRequest("제목", "작가", "본문");
+        ArticleCreateRequest request = new ArticleCreateRequest("제목", "본문", user("user1").getId());
         Article article = articleService.createArticle(request);
 
         // when
@@ -49,54 +48,50 @@ public class ArticleServiceTest {
         //then
         assertThat(readArticle.getId()).hasNoNullFieldsOrProperties();
         assertThat(readArticle.getTitle()).isEqualTo(request.getTitle());
-        assertThat(readArticle.getAuthor()).isEqualTo(request.getAuthor());
         assertThat(readArticle.getContent()).isEqualTo(request.getContent());
-        assertThat(readArticle.getCreated()).hasNoNullFieldsOrProperties();
     }
 
     @Test
     public void modifyArticleTest() {
         // given
-        ArticleCreateRequest request = new ArticleCreateRequest("제목", "작가", "본문");
+        ArticleCreateRequest request = new ArticleCreateRequest("제목", "본문", user("user1").getId());
         Article article = articleService.createArticle(request);
 
         //when
-        ArticleModifyRequest modifyRequest = new ArticleModifyRequest("title", "author", "content");
-        Article modifiedArticle = articleService.modifyArticle(article.getId(), modifyRequest);
+        ArticleModifyRequest modifyRequest = new ArticleModifyRequest("title", "content");
+        Article modifiedArticle = articleService.modifyArticle(article.getId(), modifyRequest, null);
 
         //then
         assertThat(modifiedArticle.getId()).isEqualTo(article.getId());
         assertThat(modifiedArticle.getTitle()).isEqualTo("title");
-        assertThat(modifiedArticle.getAuthor()).isEqualTo("author");
         assertThat(modifiedArticle.getContent()).isEqualTo("content");
     }
 
     @Test
     public void removeArticleTest() {
         // given
-        ArticleCreateRequest request = new ArticleCreateRequest("제목", "작가", "본문");
+        ArticleCreateRequest request = new ArticleCreateRequest("제목", "본문", user("user1").getId());
         Article article = articleService.createArticle(request);
-        assertThat(articleRepository.count()).isEqualTo(1L);
+        Long counts = articleRepository.count();
 
         //when
         articleService.removeArticle(article.getId());
 
         //then
-        assertThat(articleRepository.count()).isEqualTo(0L);
+        assertThat(articleRepository.count()).isEqualTo(counts - 1);
     }
 
     @Test
     public void readArticlePageTest() {
         // given
         for (int idx = 0; idx < 30; idx++) {
-            articleService.createArticle(new ArticleCreateRequest("제목" + idx, "작가", "본문"));
+            articleService.createArticle(new ArticleCreateRequest("제목" + idx, "본문", user("user1").getId()));
         }
 
         // when
         Page<Article> articlePage = articleService.getArticlePage(0);
 
         // then
-        assertThat(articlePage.getTotalElements()).isEqualTo(30);
         assertThat(articlePage.getSize()).isEqualTo(10);
         Article firstArticle = articlePage.getContent().get(0);
         assertThat(firstArticle.getTitle()).isEqualTo("제목29");

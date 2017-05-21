@@ -27,4 +27,8 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
         return user;
     }
+
+    public User getUser(Long userId){
+        return userRepository.getOne(userId);
+    }
 }

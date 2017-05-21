@@ -1,5 +1,5 @@
 
-package net.chandol.study.board.debug.local;
+package net.chandol.study.board.util;
 
 import net.chandol.study.board.article.dto.ArticleCreateRequest;
 import net.chandol.study.board.article.service.ArticleService;
@@ -26,7 +26,7 @@ public class LocalTestDataGenerator {
         User user = userService.createUser(new UserCreateRequest("admin", "email", "admin"));
 
         IntStream.rangeClosed(1, 128).forEach(i -> {
-            ArticleCreateRequest request = new ArticleCreateRequest("제목 " + i, "작가 " + i, "본문 " + i);
+            ArticleCreateRequest request = new ArticleCreateRequest("제목 " + i, "본문 " + i, user.getId());
             articleService.createArticle(request);
         });
     }
