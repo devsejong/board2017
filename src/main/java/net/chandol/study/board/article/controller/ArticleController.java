@@ -33,13 +33,13 @@ public class ArticleController {
     }
 
     @GetMapping("/articles/write")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("authenticated")
     public String writeArticle(Model model) {
         return "pages/article/article-write";
     }
 
     @PostMapping("/articles/write")
-    @PreAuthorize("#request.userId == principal.id")
+    @PreAuthorize("#request.userId == principal['id']")
     public String writeArticle(
             @ModelAttribute ArticleCreateRequest request) {
 

@@ -18,10 +18,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired UserService userService;
 
-    // userDetails를 조회로직 설정.
+    // userDetails를 활용하여 유저정보를 조회
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // @formatter:off
         auth.userDetailsService(userService);
+        // @formatter:on
     }
 
     @Override
@@ -37,6 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .and()
             .csrf()
+                //TODO 작업필요!!
                 .disable()
 //                .csrfTokenRepository(csrfTokenRepository())
 //                .ignoringAntMatchers("/h2-console/**")
