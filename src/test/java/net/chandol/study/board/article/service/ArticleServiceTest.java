@@ -33,7 +33,7 @@ public class ArticleServiceTest {
         // then
         assertThat(article.getId()).hasNoNullFieldsOrProperties();
         assertThat(article.getTitle()).isEqualTo(request.getTitle());
-        assertThat(article.getContent()).isEqualTo(request.getContent());
+        assertThat(article.getBody()).isEqualTo(request.getBody());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class ArticleServiceTest {
         //then
         assertThat(readArticle.getId()).hasNoNullFieldsOrProperties();
         assertThat(readArticle.getTitle()).isEqualTo(request.getTitle());
-        assertThat(readArticle.getContent()).isEqualTo(request.getContent());
+        assertThat(readArticle.getBody()).isEqualTo(request.getBody());
     }
 
     @Test
@@ -58,13 +58,13 @@ public class ArticleServiceTest {
         Article article = articleService.createArticle(request);
 
         //when
-        ArticleModifyRequest modifyRequest = new ArticleModifyRequest("title", "content");
+        ArticleModifyRequest modifyRequest = new ArticleModifyRequest("title", "body");
         Article modifiedArticle = articleService.modifyArticle(article.getId(), modifyRequest, null);
 
         //then
         assertThat(modifiedArticle.getId()).isEqualTo(article.getId());
         assertThat(modifiedArticle.getTitle()).isEqualTo("title");
-        assertThat(modifiedArticle.getContent()).isEqualTo("content");
+        assertThat(modifiedArticle.getBody()).isEqualTo("body");
     }
 
     @Test

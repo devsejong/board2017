@@ -24,7 +24,7 @@ public class ArticleService {
     @Transactional
     public Article createArticle(ArticleCreateRequest request) {
         User user = userService.getUser(request.getUserId());
-        Article article = new Article(request.getTitle(), request.getContent(), user);
+        Article article = new Article(request.getTitle(), request.getBody(), user);
         
         return repository.save(article);
     }
@@ -45,12 +45,12 @@ public class ArticleService {
     @Transactional
     public Article modifyArticle(Long id, ArticleModifyRequest request, User user) {
         Article article = getArticle(id);
-        article.modifyArticle(request.getTitle(),request.getContent(), user);
+        article.modifyArticle(request.getTitle(),request.getBody(), user);
         return article;
     }
 
     @Transactional
-    public void removeArticle(Long id) {
+    void removeArticle(Long id) {
         repository.delete(id);
     }
 

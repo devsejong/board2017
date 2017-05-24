@@ -6,11 +6,11 @@ import lombok.experimental.Tolerate;
 @Data
 public class ArticleModifyRequest {
     private String title;
-    private String content;
+    private String body;
 
     @Tolerate
-    public ArticleModifyRequest(String title, String content) {
+    public ArticleModifyRequest(String title, String body) {
         this.title = title;
-        this.content = content;
+        this.body = body;
     }
 }

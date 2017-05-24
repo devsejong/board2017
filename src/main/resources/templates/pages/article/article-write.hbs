@@ -17,8 +17,8 @@
                 </div>
 
                 <div class="form-group">
-                    <div id="contentEditor"></div>
-                    <input type="hidden" id="content" name="content">
+                    <div id="bodyEditor"></div>
+                    <input type="hidden" id="body" name="body">
                 </div>
 
                 <div class="form-group text-right">
@@ -34,14 +34,14 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
         <script>
             $(function () {
-                $('#contentEditor').summernote({
+                $('#bodyEditor').summernote({
                     height: 500
                 });
 
                 $("#btnSubmit").on("click", function (e) {
                     e.preventDefault();
-                    var content = $('#contentEditor').summernote('code');
-                    $("#content").val(content);
+                    var body = $('#bodyEditor').summernote('code');
+                    $("#body").val(body);
 
                     $("#editForm").submit();
                 });

@@ -4,15 +4,15 @@ import lombok.Data;
 import lombok.experimental.Tolerate;
 
 @Data
-public class ArticleCreateRequest {
-    private String title;
-    private String body;
+public class CommentCreateRequest {
+    private Long articleId;
     private Long userId;
+    private String body;
 
     @Tolerate
-    public ArticleCreateRequest(String title, String body, Long userId) {
+    public CommentCreateRequest(Long articleId, Long userId, String body) {
+        this.articleId = articleId;
         this.userId = userId;
-        this.title = title;
         this.body = body;
     }
 }

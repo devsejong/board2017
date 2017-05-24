@@ -61,9 +61,9 @@ public class TestData {
             User user = userService.loadUserByUsername("user1");
 
             return Arrays.asList(
-                    articleService.createArticle(new ArticleCreateRequest("title1", "content1", user.getId())),
-                    articleService.createArticle(new ArticleCreateRequest("title2", "content2", user.getId())),
-                    articleService.createArticle(new ArticleCreateRequest("title3", "content3", user.getId()))
+                    articleService.createArticle(new ArticleCreateRequest("title1", "body1", user.getId())),
+                    articleService.createArticle(new ArticleCreateRequest("title2", "body2", user.getId())),
+                    articleService.createArticle(new ArticleCreateRequest("title3", "body3", user.getId()))
             );
         }
     }
