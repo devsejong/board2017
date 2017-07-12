@@ -22,7 +22,7 @@ public class Article {
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
     @Column(columnDefinition = "TEXT")
     private String body;
